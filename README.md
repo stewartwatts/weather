@@ -18,7 +18,7 @@ Then load, reformat, and plot the data for a region and type of season.
 from degree_days import load_file, plot_region_seasons
 df = load_file()
 
-# plot a season by census region or state, highlighting th last couple years
+# plot a season by census region or state, highlighting the last couple years
 plot_region_season(df, "USA", "HDD", ["2013", "2014"], "USA.png")
 plot_region_season(df, "NY", "HDD", ["2013", "2014"], "NY.png")
 ```
