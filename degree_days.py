@@ -1,4 +1,3 @@
-import os
 import urllib2
 import pandas as pd
 import datetime as dt
@@ -15,7 +14,7 @@ OUT_FILENAME = "degree_days.csv"   # a csv in the current directory
 START_YEAR = 1981                  # first year NOAA has data
 url_fmt = "ftp://ftp.cpc.ncep.noaa.gov/htdocs/degree_days/weighted/daily_data/%s/Population.%s.txt"
 states_fmt = "ftp://ftp.cpc.ncep.noaa.gov/htdocs/degree_days/weighted/daily_data/%s/StatesCONUS.%s.txt" 
-# int -> census regions for parsing the data
+# NOAA's census region codes
 key_map = {
     "1": "NEW ENGLAND", "2": "MIDDLE ATLANTIC", "3": "E N CENTRAL",
     "4": "W N CENTRAL", "5": "SOUTH ATLANTIC", "6": "E S CENTRAL",
@@ -45,13 +44,13 @@ def data_from_year(year):
         return (key_map.get(data[0], data[0]), map(f, data[1:]))
 
     cool_txt = hit_url(url_fmt % (year, "Cooling")).read().strip().split("\n")
-    sleep(2.)
+    sleep(3.)
     heat_txt = hit_url(url_fmt % (year, "Heating")).read().strip().split("\n")
-    sleep(2.)
+    sleep(3.)
     states_cool_txt = hit_url(states_fmt % (year, "Cooling")).read().strip().split("\n")
-    sleep(2.)
+    sleep(3.)
     states_heat_txt = hit_url(states_fmt % (year, "Heating")).read().strip().split("\n")
-    sleep(2.)
+    sleep(3.)
 
     # isolate data lines
     cool_txt = filter(lambda line: "|" in line, cool_txt)
