@@ -136,7 +136,7 @@ def get_region_seasons(df, region):
     cumulative = pd.concat([cool_cum, heat_cum], axis=1, keys=["CDD", "HDD"])
     return daily, cumulative 
 
-def plot_region_seasons(all_df, region, season, years, fn=None):
+def plot_region_seasons(all_df, region, season, years=[], fn=None):
     """
     `all_df`: all data DataFrame
     `season`: name of the region in all caps
@@ -158,7 +158,7 @@ def plot_region_seasons(all_df, region, season, years, fn=None):
 
     if type(years) == str:
         years = [years]
-    assert season in ["CDD", "HDD"], "plot_region_season(): `season` <%s> must be in: \n\t['CDD', 'HDD']" % season
+    assert season in ["CDD", "HDD"], "plot_region_seasons(): `season` <%s> must be in: \n\t['CDD', 'HDD']" % season
 
     daily, cumulative = get_region_seasons(all_df, region)
     start = dt.date(2014, 1 if season == "CDD" else 7, 1)
