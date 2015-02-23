@@ -1,6 +1,3 @@
-"""
-Parse NOAA population-weighted HDD and CDD text data to pandas DataFrame
-"""
 import os
 import urllib2
 import pandas as pd
