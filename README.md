@@ -27,3 +27,5 @@ plot_region_season(df, "NY", "HDD", ["2013", "2014"], "NY.png")
 - The 2014 "heating season" spans 2014-07-01 to 2015-06-30.  
 - Larger values on the charts means a colder "heating season" (winter) or a warmer "cooling season" (summer).  
 - Census regions: "NEW ENGLAND", "MIDDLE ATLANTIC", "E N CENTRAL", "W N CENTRAL", "SOUTH ATLANTIC", "E S CENTRAL", "W S CENTRAL", "MOUNTAIN", "PACIFIC", "USA", or state abbreviations, like "NY".
+
+![alt tag](https://raw.github.com/stewartwatts/weather/blob/master/USA.png?raw=true)
