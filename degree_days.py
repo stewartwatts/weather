@@ -111,12 +111,14 @@ def get_region_seasons(df, region):
     # series subsets corresponding to each yearly season
     cools, heats = [], []
     for yr in range(sd.year, ed.year + 1):
-        ser = cool.loc[(cool.index >= pd.Timestamp(dt.date(yr, 1, 1))) & (cool.index < pd.Timestamp(dt.date(yr + 1, 1, 1)))]
+        ser = cool.loc[(cool.index >= pd.Timestamp(dt.date(yr, 1, 1))) & 
+                       (cool.index < pd.Timestamp(dt.date(yr + 1, 1, 1)))]
         ser.reset_index(drop=True, inplace=True)
         ser.name = str(yr)
         cools.append(ser)
 
-        ser = heat.loc[(heat.index >= pd.Timestamp(dt.date(yr, 7, 1))) & (heat.index < pd.Timestamp(dt.date(yr + 1, 7, 1)))]
+        ser = heat.loc[(heat.index >= pd.Timestamp(dt.date(yr, 7, 1))) & 
+                       (heat.index < pd.Timestamp(dt.date(yr + 1, 7, 1)))]
         ser.reset_index(drop=True, inplace=True)
         ser.name = str(yr)
         heats.append(ser)
@@ -145,10 +147,19 @@ def plot_region_seasons(all_df, region, season, years, fn=None):
     1. All seasons of this type, with mean and `years` highlighted
     2. All seasons with mean subtracted off, with mean and `years` highlighted
     """
+    def fmt_label(label):
+        # For HDD "2014" -> "2014-2015"
+        if season == "CDD":
+            return label
+        try:
+            return "%s-%s" % (label, str(int(label)+1))
+        except:
+            return label
+
     if type(years) == str:
         years = [years]
     assert season in ["CDD", "HDD"], "plot_region_season(): `season` <%s> must be in: \n\t['CDD', 'HDD']" % season
-    
+
     daily, cumulative = get_region_seasons(all_df, region)
     start = dt.date(2014, 1 if season == "CDD" else 7, 1)
     date_idx = [(start + dt.timedelta(days=i)).strftime("%b%d") for i in range(len(cumulative))]
@@ -164,7 +175,7 @@ def plot_region_seasons(all_df, region, season, years, fn=None):
         axs[0].plot(df[year], lw=2, label=year)
     handles, labels = axs[0].get_legend_handles_labels()
     n = len(years) + 1
-    axs[0].legend(handles[-n:], labels[-n:], loc="best")
+    axs[0].legend(handles[-n:], map(fmt_label, labels[-n:]), loc="best")
 
     # 2
     df2 = df.sub(df["mean"], axis=0)
@@ -174,7 +185,7 @@ def plot_region_seasons(all_df, region, season, years, fn=None):
         axs[1].plot(df2[year], lw=2, label=year)
     handles, labels = axs[1].get_legend_handles_labels()
     n = len(years) + 1
-    axs[1].legend(handles[-n:], labels[-n:], loc="best")
+    axs[1].legend(handles[-n:], map(fmt_label, labels[-n:]), loc="best")
 
     if fn:
         fig.savefig(fn, bbox_inches="tight")
