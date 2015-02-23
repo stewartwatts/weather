@@ -74,10 +74,6 @@ def data_from_year(year):
     df = pd.concat([cool, heat], axis=1, keys=["CDD", "HDD"])
     return df
 
-def load_file(filepath=OUT_FILENAME):
-    # read an existing degree day file from disk with correct formatting
-    return pd.read_csv(filepath, index_col=0, header=[0, 1], parse_dates=True)
-
 def update_degree_days(filepath=OUT_FILENAME):
     """
     Main function to build or update a CDD/HDD data file
@@ -98,6 +94,10 @@ def update_degree_days(filepath=OUT_FILENAME):
     full_df.to_csv(OUT_FILENAME)
 
 # ----- data logic ----- #
+def load_file(filepath=OUT_FILENAME):
+    # read an existing degree day file from disk with correct formatting
+    return pd.read_csv(filepath, index_col=0, header=[0, 1], parse_dates=True)
+
 def get_region_seasons(df, region): 
     """
     reformat the DataFrame with all data to contain all seasons for a given region
